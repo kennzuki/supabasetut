@@ -1,15 +1,19 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+
 
 function App() {
-  const [count, setCount] = useState(0)
 
+const[todoList,setTodoList] =useState([])
+  const [newTodo, setNewTodo] = useState('')
+  
   return (
     
       <div>
-        <h1 className="underline text-xl uppercase">supabase</h1>
+      <h1 className="underline text-xl uppercase">supabase</h1>
+      <section className="mt-8">
+        <input type="text" className="rounded p-2" placeholder="Add new todo" />
+        <button className="py-2 px-4 text-white bg-blue-500">Add Todo Item</button>
+      </section>
     </div>
   )
 }
