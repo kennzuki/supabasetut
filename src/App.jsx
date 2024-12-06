@@ -5,6 +5,19 @@ function App() {
   const [todoList, setTodoList] = useState([]);
   const [newTodo, setNewTodo] = useState('');
 
+  useEffect(() => {
+    getTodos();
+  }, []);
+
+  const getTodos = async () => { 
+    const { data, error } = await supabase.from('TodoList').select('*');
+    if (error) {
+      console.log('error in fetching todo list', error);
+    } else {
+      setTodoList(data);
+    }
+  }
+
   const addTodo = async () => {
     const newTodoData = {
       title: newTodo,
@@ -43,8 +56,7 @@ function App() {
           <li>
             <p> {todo.title}</p>
             <button className='py-2 px-4 text-white bg-green-500'>
-              {' '}
-              {todo.isCompleted ? 'Undo' : 'Complete Task'}
+              
             </button>
             <button className='py-2 px-4 text-white bg-red-500' > Delete Task</button>
           </li>
