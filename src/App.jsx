@@ -49,10 +49,22 @@ function App() {
     }
   }
 
+  const deleteTask = async (id) => {
+    const { data, error } = await supabase.from('TodoList').delete().eq('id', id)
+    
+    if (error) {
+      console.log('error in adding todo list', error);
+    } else {
+     
+
+      setTodoList((prev)=>prev.filter((todo)=>todo.id !==id))
+    }
+  }
+
   return (
     <div className='flex flex-col items-center gap-6 mt-20'>
-      <h1 className='underline text-xl uppercase'>supabase</h1>
-      <section className='mt-8'>
+      <h1 className='underline text-xl uppercase font-bold'>supabase Todo List</h1>
+      <section className='flex gap-4 place-items-center mt-8'>
         <input
           type='text'
           className='rounded p-2 border-2'
@@ -70,10 +82,10 @@ function App() {
           <li key={todo.id} className="grid grid-cols-4">
             <p className="">{todo.id}</p>
             <p className="mr-4"> {todo.title}</p>
-            <button onClick={()=>completeTodoTask(todo.id,todo.is_completed)} className='py-2 px-4 text-white bg-green-500 rounded mr-2'>
+            <button onClick={()=>completeTodoTask(todo.id,todo.is_completed)} className='py-2 px-6 text-white bg-green-500 rounded mr-2 w-[180px]'>
               {todo.is_completed?'undo':"completed"}
             </button>
-            <button className='py-2 px-4 text-white bg-red-500 rounded' > Delete Task</button>
+            <button onClick={() => deleteTask(todo.id)} className='py-2 px-6 text-white bg-red-500 rounded' > Delete Task</button>
           </li>
         ))}
       </ul>
